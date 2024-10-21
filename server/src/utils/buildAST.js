@@ -1,6 +1,6 @@
-const { tokenExtraction, parseTokens } = require('./index');
+const parseTokens = require('./parseTokes');
 
-function buildAST(ruleString) {
+const buildAST = (ruleString) => {
     let tokens = [];
     let idx = 0;
   
@@ -11,6 +11,6 @@ function buildAST(ruleString) {
     }
   
     return parseTokens(tokens);
-}
+};
 
 module.exports = buildAST;

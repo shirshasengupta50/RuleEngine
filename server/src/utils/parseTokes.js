@@ -1,6 +1,6 @@
-const { parseValue } = require('./index');
+const parseValue = require("./parseValues")
 
-function parseTokens(tokens) {
+const parseTokens = (tokens) => {
     const stack = [];
     let currentNode = null;
   

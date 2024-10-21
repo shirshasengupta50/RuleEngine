@@ -14,6 +14,7 @@ const ruleCreate = async(req, res) => {
             message : "Rule Created Successfully"
         })
     } catch (error) {
+        console.log(error);
         console.log("Error in Controller Layer");
         return res.status(500).json({
             data: {},
