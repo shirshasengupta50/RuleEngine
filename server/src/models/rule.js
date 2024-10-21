@@ -25,7 +25,7 @@ const nodeSchema = new mongoose.Schema({
 });
 
 const ruleSchema = new mongoose.Schema({
-    rudeID : {
+    ruleID : {
         type: Number,
         required: true,
         unique: true
