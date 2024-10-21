@@ -1,5 +1,5 @@
 const { RuleRepository } = require('../repository/index');
-const { buildAST } = require('../utils/index');
+const buildAST = require('../utils/buildAST');
 
 class RuleService {
 

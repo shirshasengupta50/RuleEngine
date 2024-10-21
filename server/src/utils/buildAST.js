@@ -1,4 +1,5 @@
 const parseTokens = require('./parseTokes');
+const tokenExtraction = require('./tokenExtraction');
 
 const buildAST = (ruleString) => {
     let tokens = [];

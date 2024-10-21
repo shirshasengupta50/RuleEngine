@@ -4,7 +4,7 @@ const ruleService = new RuleService();
 
 const ruleCreate = async(req, res) => {
     try {
-        const ruleString = req.body;
+        const { ruleString } = req.body;
         const response = await ruleService.createRule(ruleString);
 
         res.status(201).json({
