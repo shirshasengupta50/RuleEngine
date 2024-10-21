@@ -13,12 +13,12 @@ class RuleRepository {
         }
     }
 
-    async get(id){
+    async get(){
         try {
             
             const ruleFetched = await Rule.find({
-                ruleID : id
-            });
+                ruleID : 1
+            }).lean();
             return ruleFetched;
 
         } catch (error) {

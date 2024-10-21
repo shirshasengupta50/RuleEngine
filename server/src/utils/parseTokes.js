@@ -1,61 +1,77 @@
-const parseValue = require("./parseValues")
+const parseValue = require('./parseValues');
 
-const parseTokens = (tokens) => {
-    const stack = [];
-    let currentNode = null;
-  
-    while (tokens.length > 0) {
-      const token = tokens.shift();
-  
-      if (token === '(') {
-        
-        const subExpression = parseTokens(tokens);
-        if (currentNode) {
-          if (!currentNode.left) {
-            currentNode.left = subExpression;
-          } else {
-            currentNode.right = subExpression;
-          }
+function parseTokens(tokens) {
+  const stack = [];
+  let currentNode = null;
+
+  while (tokens.length > 0) {
+    const token = tokens.shift();
+
+    if (token === '(') {
+
+      const subExpression = parseTokens(tokens);
+      if (currentNode) {
+        if (!currentNode.left) {
+          currentNode.left = subExpression;
         } else {
-          currentNode = subExpression;
-        }
-      } else if (token === ')') {
-       
-        return currentNode;
-      } else if (token === 'AND' || token === 'OR') {
-        
-        const operatorNode = {
-          type: 'operator',
-          operator: token,
-          left: currentNode, 
-          right: null
-        };
-        currentNode = operatorNode;
-      } else if (['>', '<', '>=', '<=', '==', '!='].includes(token)) {
-       
-        const leftField = stack.pop(); 
-        const value = tokens.shift(); 
-        const conditionNode = {
-          type: 'condition',
-          operatorNode: { type: 'operator', operator: token },
-          left: { type: 'field', name: leftField },
-          right: { type: 'value', value: parseValue(value) }
-        };
-        if (currentNode) {
-          if (!currentNode.left) {
-            currentNode.left = conditionNode;
-          } else {
-            currentNode.right = conditionNode;
-          }
-        } else {
-          currentNode = conditionNode;
+          currentNode.right = subExpression;
         }
       } else {
-
-        stack.push(token);
+        currentNode = subExpression;
       }
+    } else if (token === ')') {
+
+      return currentNode;
+    } else if (token === 'AND' || token === 'OR') {
+
+      const operatorNode = {
+        type: 'operator',
+        operator: token,
+        left: currentNode,
+        right: null
+      };
+      currentNode = operatorNode;
+    } else if (['>', '<', '>=', '<=', '=', '!='].includes(token)) {
+
+      const leftField = stack.pop(); 
+      const value = tokens.shift(); 
+
+      const fieldNode = {
+        type: 'field',
+        field: leftField 
+      };
+
+      const operatorNode = {
+        type: 'operator',
+        operator: token 
+      };
+
+      const valueNode = {
+        type: 'value',
+        value: parseValue(value) 
+      };
+
+      const conditionNode = {
+        type: 'condition',
+        left: fieldNode, 
+        operator: operatorNode, 
+        right: valueNode 
+      };
+
+      if (currentNode) {
+        if (!currentNode.left) {
+          currentNode.left = conditionNode;
+        } else {
+          currentNode.right = conditionNode;
+        }
+      } else {
+        currentNode = conditionNode;
+      }
+    } else {
+      stack.push(token);
     }
-    return currentNode;
+  }
+  return currentNode;
 }
 
 module.exports = parseTokens;

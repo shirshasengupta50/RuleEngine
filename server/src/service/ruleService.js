@@ -1,5 +1,6 @@
 const { RuleRepository } = require('../repository/index');
 const buildAST = require('../utils/buildAST');
+const evaluateASTNode = require('../utils/evaluateAST');
 
 class RuleService {
 
@@ -24,6 +25,23 @@ class RuleService {
 
         } catch (error) {
             console.log(`Error Occured in create Service Layer`);
+            throw error;
+        }
+    }
+
+    async evaluateRule(data){
+        try {
+            const rule = await this.ruleRepository.get();
+            const astRule = rule[0].root;
+
+            const { _id, ...ruleWithoutId } = astRule;
+
+            console.log(ruleWithoutId);
+
+            const response = evaluateASTNode(ruleWithoutId, data);
+            return response;
+        } catch (error) {
+            console.log(`Error Occured in evaluate Service Layer`);
             throw error;
         }
     }

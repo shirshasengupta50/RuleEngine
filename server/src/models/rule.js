@@ -4,13 +4,13 @@ const nodeSchema = new mongoose.Schema({
     type : {
         type: String,
         required : true,
-        enum : ['operator', 'condition', 'feild', 'value']
+        enum : ['operator', 'condition', 'field', 'value']
     },
     operator : {
         type : String,
         enum : [">", "<", "=", ">=", "<=", "AND", "OR"]
     },
-    feild : {
+    field : {
         type : String
     },
     value : {
