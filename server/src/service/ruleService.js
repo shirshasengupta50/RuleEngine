@@ -34,7 +34,7 @@ class RuleService {
         try {
 
             const rulesList = Object.values(rules);
-            console.log(rulesList);
+
             const combineRuleString = combine_rules(rulesList);
 
             const ast = buildAST(combineRuleString);
@@ -57,12 +57,11 @@ class RuleService {
 
     async evaluateRule(data){
         try {
+            console.log(data);
             const rule = await this.ruleRepository.get();
             const astRule = rule[0].root;
 
             const { _id, ...ruleWithoutId } = astRule;
-
-            console.log(ruleWithoutId);
 
             const response = evaluateASTNode(ruleWithoutId, data);
             return response;

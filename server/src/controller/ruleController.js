@@ -51,7 +51,7 @@ const ruleCombine = async(req, res) => {
 
 const ruleEvaluate = async(req, res) => {
     try {
-        const data = req.body;
+        const { data } = req.body;
         const response = await ruleService.evaluateRule(data);
 
         res.status(201).json({
