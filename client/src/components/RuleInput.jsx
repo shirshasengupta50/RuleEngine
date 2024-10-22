@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../App.css';
 
 const RuleInput = ({ onRuleCreated }) => {
   const [rule, setRuleString] = useState('');
@@ -26,8 +27,8 @@ const RuleInput = ({ onRuleCreated }) => {
         onChange={(e) => setRuleString(e.target.value)}
         placeholder="Enter rule string"
       />
-      <button onClick={handleCreateRule}>Create Rule</button>
-      {responseMessage && <p>{responseMessage}</p>}
+      <button className="evaluate-btn" onClick={handleCreateRule}>Create Rule</button>
+      {responseMessage && <p className="response-message">{responseMessage}</p>}
     </div>
   );
 };

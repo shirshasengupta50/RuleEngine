@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../App.css';
 
 const RuleEvaluation = () => {
   const [attributes, setAttributes] = useState([{ name: '', value: '' }]);
-  const [ruleId, setRuleId] = useState('');
   const [evaluationResult, setEvaluationResult] = useState(null);
 
-  // Handle input changes for dynamic attributes
   const handleInputChange = (index, event) => {
     const { name, value } = event.target;
     const updatedAttributes = [...attributes];
@@ -14,19 +13,16 @@ const RuleEvaluation = () => {
     setAttributes(updatedAttributes);
   };
 
-  // Add a new attribute row
   const addAttribute = () => {
     setAttributes([...attributes, { name: '', value: '' }]);
   };
 
-  // Remove an attribute row
   const removeAttribute = (index) => {
     const updatedAttributes = [...attributes];
     updatedAttributes.splice(index, 1);
     setAttributes(updatedAttributes);
   };
 
-  // Handle the submission of the evaluation data
   const handleEvaluate = async () => {
     const evaluationData = attributes.reduce((acc, attr) => {
       if (attr.name && attr.value) {
@@ -47,15 +43,9 @@ const RuleEvaluation = () => {
   return (
     <div>
       <h3>Evaluate Rule</h3>
-      <input
-        type="text"
-        placeholder="Enter Rule ID"
-        value={ruleId}
-        onChange={(e) => setRuleId(e.target.value)}
-      />
       <div>
         {attributes.map((attribute, index) => (
-          <div key={index}>
+          <div className="attribute-container" key={index}>
             <input
               type="text"
               name="name"
@@ -70,13 +60,13 @@ const RuleEvaluation = () => {
               value={attribute.value}
               onChange={(e) => handleInputChange(index, e)}
             />
-            <button onClick={() => removeAttribute(index)}>Remove</button>
+            <button className="remove-button" onClick={() => removeAttribute(index)}>Remove</button>
           </div>
         ))}
-        <button onClick={addAttribute}>Add Attribute</button>
+        <button className="add-attribute-btn" onClick={addAttribute}>Add Attribute</button>
       </div>
-      <button onClick={handleEvaluate}>Evaluate</button>
-      {evaluationResult !== null && <p>Result: {evaluationResult ? 'Eligible' : 'Not Eligible'}</p>}
+      <button className="evaluate-btn" onClick={handleEvaluate}>Evaluate</button>
+      {evaluationResult !== null && <p className="response-message">Result: {evaluationResult ? 'Eligible' : 'Not Eligible'}</p>}
     </div>
   );
 };
