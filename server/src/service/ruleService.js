@@ -1,5 +1,6 @@
 const { RuleRepository } = require('../repository/index');
 const buildAST = require('../utils/buildAST');
+const combine_rules = require('../utils/combineRules');
 const evaluateASTNode = require('../utils/evaluateAST');
 
 class RuleService {
@@ -25,6 +26,31 @@ class RuleService {
 
         } catch (error) {
             console.log(`Error Occured in create Service Layer`);
+            throw error;
+        }
+    }
+
+    async combineRules(rules){
+        try {
+
+            const rulesList = Object.values(rules);
+            console.log(rulesList);
+            const combineRuleString = combine_rules(rulesList);
+
+            const ast = buildAST(combineRuleString);
+
+            const rule = {
+                ruleID : 1,
+                ruleName : "Main Rule",
+                root : ast
+            };
+
+            const ruleFormed = await this.ruleRepository.create(rule);
+
+            return ruleFormed.root;
+            
+        } catch (error) {
+            console.log(`Error Occured in combine Service Layer`);
             throw error;
         }
     }

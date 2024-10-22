@@ -25,6 +25,30 @@ const ruleCreate = async(req, res) => {
     }
 }
 
+const ruleCombine = async(req, res) => {
+    try {
+        const ruleStrings = req.body;
+        console.log(ruleStrings);
+        const response = await ruleService.combineRules(ruleStrings);
+
+        res.status(201).json({
+            data : response,
+            success : true,
+            error : {},
+            message : "Rule Created Successfully"
+        })
+    } catch (error) {
+        console.log(error);
+        console.log("Error in Controller Layer");
+        return res.status(500).json({
+            data: {},
+            error: error,
+            success: false,
+            message: "Failed to Create Rule"
+        });
+    }
+}
+
 const ruleEvaluate = async(req, res) => {
     try {
         const data = req.body;
@@ -50,5 +74,6 @@ const ruleEvaluate = async(req, res) => {
 
 module.exports = {
     ruleCreate,
-    ruleEvaluate
+    ruleEvaluate,
+    ruleCombine
 }
