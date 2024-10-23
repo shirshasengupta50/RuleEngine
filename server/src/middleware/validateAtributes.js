@@ -1,6 +1,10 @@
-const tokenExtraction = require('../utils/tokenExtraction');
+const { tokenExtraction } = require('../utils/helper/index');
 const { InvalidAttributeError } = require('../utils/errors/index');
 const attributeCatalog = require('../utils/catalog/attributeCatalog');
+
+const isStringLiteral = (token) => {
+  return /^'.*'$/.test(token); 
+};
 
 const validateAttributesMiddleware = (req, res, next) => {
     try {
@@ -16,7 +20,7 @@ const validateAttributesMiddleware = (req, res, next) => {
       }
 
       tokens.forEach(token => {
-        if (!['AND', 'OR', '>', '<', '>=', '<=', '=', '!=', '(', ')'].includes(token) && isNaN(token)) {
+        if (!['AND', 'OR', '>', '<', '>=', '<=', '=', '!=', '(', ')'].includes(token) && isNaN(token) && !isStringLiteral(token)) {
             if (!attributeCatalog.includes(token)) {
                 throw new InvalidAttributeError(token);
             }
