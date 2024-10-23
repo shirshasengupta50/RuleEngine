@@ -1,4 +1,5 @@
 const parseValue = require('./parseValues');
+const { InvalidComparisonError, InvalidOperatorError } = require('./errors/index');
 
 function parseTokens(tokens) {
   const stack = [];
@@ -23,7 +24,9 @@ function parseTokens(tokens) {
 
       return currentNode;
     } else if (token === 'AND' || token === 'OR') {
-
+      if (!currentNode) {
+        throw new InvalidOperatorError(token);
+      }
       const operatorNode = {
         type: 'operator',
         operator: token,
@@ -35,6 +38,10 @@ function parseTokens(tokens) {
 
       const leftField = stack.pop(); 
       const value = tokens.shift(); 
+
+      if (!leftField || !value) {
+        throw new InvalidComparisonError(leftField, value);
+      }
 
       const fieldNode = {
         type: 'field',
@@ -71,6 +78,11 @@ function parseTokens(tokens) {
       stack.push(token);
     }
   }
+
+  if (!currentNode) {
+    throw new InvalidComparisonError('Incomplete expression', '');
+  }
+
   return currentNode;
 }
 

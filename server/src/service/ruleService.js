@@ -1,4 +1,5 @@
 const { RuleRepository } = require('../repository/index');
+const { RuleError } = require('../utils/errors/index');
 const buildAST = require('../utils/buildAST');
 const combine_rules = require('../utils/combineRules');
 const evaluateASTNode = require('../utils/evaluateAST');
@@ -25,8 +26,12 @@ class RuleService {
             return ruleFormed.root;
 
         } catch (error) {
-            console.log(`Error Occured in create Service Layer`);
-            throw error;
+            if (error instanceof RuleError) {
+                console.log(`Rule creation error: ${error.message}`);
+              } else {
+                console.log('Unknown error occurred during rule creation');
+              }
+              throw error;
         }
     }
 
@@ -50,8 +55,12 @@ class RuleService {
             return ruleFormed.root;
             
         } catch (error) {
-            console.log(`Error Occured in combine Service Layer`);
-            throw error;
+            if (error instanceof RuleError) {
+                console.log(`Rule creation error: ${error.message}`);
+              } else {
+                console.log('Unknown error occurred during rule creation');
+              }
+              throw error;
         }
     }
 
@@ -66,8 +75,12 @@ class RuleService {
             const response = evaluateASTNode(ruleWithoutId, data);
             return response;
         } catch (error) {
-            console.log(`Error Occured in evaluate Service Layer`);
-            throw error;
+            if (error instanceof RuleError) {
+                console.log(`Rule creation error: ${error.message}`);
+              } else {
+                console.log('Unknown error occurred during rule creation');
+              }
+              throw error;
         }
     }
 }
