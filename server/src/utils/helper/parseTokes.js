@@ -1,5 +1,5 @@
 const parseValue = require('./parseValues');
-const { InvalidComparisonError, InvalidOperatorError } = require('./errors/index');
+const { InvalidComparisonError, InvalidOperatorError } = require('../errors/index');
 
 function parseTokens(tokens) {
   const stack = [];

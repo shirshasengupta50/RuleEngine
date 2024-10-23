@@ -1,6 +1,6 @@
 const parseTokens = require('./parseTokes');
 const tokenExtraction = require('./tokenExtraction');
-const { SyntaxError } = require('./errors/index');
+const { SyntaxError } = require('../errors/index');
 
 function buildAST(ruleString) {
 

@@ -1,8 +1,6 @@
 const { RuleRepository } = require('../repository/index');
 const { RuleError } = require('../utils/errors/index');
-const buildAST = require('../utils/buildAST');
-const combine_rules = require('../utils/combineRules');
-const evaluateASTNode = require('../utils/evaluateAST');
+const { buildAST, combine_rules, evaluateASTNode } = require('../utils/helper/index');
 
 class RuleService {
 
