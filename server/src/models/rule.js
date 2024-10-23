@@ -8,7 +8,7 @@ const nodeSchema = new mongoose.Schema({
     },
     operator : {
         type : String,
-        enum : [">", "<", "=", ">=", "<=", "AND", "OR"]
+        enum : [">", "<", "=", ">=", "!=", "<=", "AND", "OR"]
     },
     field : {
         type : String
