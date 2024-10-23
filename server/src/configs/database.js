@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const MONGODB_URI = "mongodb+srv://shirshasengupta50:ShirshaSengupta5@cluster0.9q96d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+const { MONGODB_URI } = require('./serverConfig');
 
 const dbConnect = async()=>{
     try {
